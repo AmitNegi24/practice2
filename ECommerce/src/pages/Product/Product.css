@@ -1,23 +1,118 @@
-.product{
+.product {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
-    
+    gap: 10px;
 }
-.productimage{
-    
-    float: left;
-    width: 700px;
-    height:700px;
-    margin-left:50px;
+
+.productimage {
+
+    width: 100%;
+    height: 550px;
+    object-fit: contain;
 }
-.details{
-   background-color:blue;
-   width:700px;
-   height:700px;
-   margin-left:370px;
+
+.details {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
 }
-.productimage img{
-    max-width: 100%;
-    height: 40rem;
-    display: block;
-    border-style: dotted;
+
+.details h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.quantitybox {
+    width: 13rem;
+    /* Equivalent to w-52 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #718096;
+    /* Equivalent to text-gray-500 */
+    gap: 1rem;
+    /* Equivalent to gap-4 */
+    border: 1px solid #e2e8f0;
+    /* Equivalent to border */
+    padding: 0.75rem;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.buttons button {
+    border: 1px solid #e2e8f0;
+    /* Equivalent to border */
+    height: 1.25rem;
+    /* Equivalent to h-5 */
+    font-weight: normal;
+    /* Equivalent to font-normal */
+    font-size: 1.125rem;
+    /* Equivalent to text-lg */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0.5rem;
+    /* Equivalent to px-2 */
+    padding-right: 0.5rem;
+    /* Equivalent to px-2 */
+    transition-duration: 0.3s;
+    /* Equivalent to duration-300 */
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #4a5568;
+    /* Equivalent to hover:bg-gray-700 */
+    color: #fff;
+}
+
+.buttons button:active {
+    background-color: #000;
+}
+
+.addtocartbutton {
+    background-color: #000;
+    /* Equivalent to bg-black */
+    color: #fff;
+    /* Equivalent to text-white */
+    padding-top: 0.75rem;
+    /* Equivalent to py-3 */
+    padding-bottom: 0.75rem;
+    /* Equivalent to py-3 */
+    padding-left: 1.5rem;
+    /* Equivalent to px-6 */
+    padding-right: 1.5rem;
+    /* Equivalent to px-6 */
+    transition-duration: 0.3s;
+    /* Optional: Equivalent to duration-300 */
+    cursor: pointer;
+}
+
+.addtocartbutton:active {
+    background-color: #4a5568;
 }
