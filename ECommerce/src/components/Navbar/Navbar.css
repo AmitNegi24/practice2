@@ -1,0 +1,48 @@
+/* Navbar.css */
+
+.navbar {
+    background-color:#cdb7b7;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height:120px;
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .container img {
+    width: 130px;
+    border: none;
+    object-fit: contain;
+    mix-blend-mode: color-burn;
+  }
+  
+  .links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .links a {
+    color: rgb(10, 10, 10);
+    text-decoration: none;
+    margin-left: 55px; /* Adjust the margin as needed */
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .links a:hover {
+    border-bottom: 2px solid white;
+  }
+  
+  .links a:last-child {
+    margin-right: 0; /* Remove the margin for the last link */
+  }
+  

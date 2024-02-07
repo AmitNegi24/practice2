@@ -1,0 +1,23 @@
+.product{
+    display: flex;
+    
+}
+.productimage{
+    
+    float: left;
+    width: 700px;
+    height:700px;
+    margin-left:50px;
+}
+.details{
+   background-color:blue;
+   width:700px;
+   height:700px;
+   margin-left:370px;
+}
+.productimage img{
+    max-width: 100%;
+    height: 40rem;
+    display: block;
+    border-style: dotted;
+}

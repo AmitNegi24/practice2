@@ -1,0 +1,32 @@
+/* ProductCard.css */
+
+.product-card {
+    flex: 0 1 calc(25% - 10px); /* 25% width with a little gap between cards */
+    margin-bottom: 20px; /* Adjust as needed */
+    box-sizing: border-box;
+    
+  }
+  
+  .card {
+    padding: 15px;
+  }
+  
+  .card img {
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card p {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+  
+  .card b {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Add your other styles as needed */
+  

@@ -1,0 +1,15 @@
+/* Banner.css */
+
+.Banner-container {
+    width: 80%;
+    margin: auto;
+  }
+  
+  .Banner-slide {
+    img {
+      width: 100%;
+      height: auto;
+      
+    }
+  }
+  
