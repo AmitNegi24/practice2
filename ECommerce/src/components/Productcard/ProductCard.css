@@ -29,4 +29,26 @@
   }
   
   /* Add your other styles as needed */
-  
+  /* Assuming you have a class named "custom-element" applied to your HTML element */
+.custom-element {
+  position: absolute;
+  z-index: 20;
+  width: 100px;
+  color: #718096; /* Equivalent to text-gray-500 */
+  transition: color 0.3s; /* Equivalent to transition-transform */
+  cursor: pointer; /* Equivalent to cursor-pointer */
+}
+
+.custom-element:hover {
+  color: #1a202c; /* Equivalent to hover:text-gray-900 */
+}
+
+/* Assuming this element is part of a group with the hover effect */
+.group:hover .custom-element {
+  transform: translateX(0); /* Equivalent to group-hover:translate-x-0 */
+}
+
+/* Initial state for group */
+.group .custom-element {
+  transform: translateX(32px); /* Equivalent to transform-translate-x-32 */
+}
