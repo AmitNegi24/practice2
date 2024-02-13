@@ -45,4 +45,10 @@
   .links a:last-child {
     margin-right: 0; /* Remove the margin for the last link */
   }
-  
+  .badge {
+    background-color: rgb(69, 62, 62);
+    color: white;
+    padding: 0.5px 1px;
+    text-align: center;
+    border-radius: 5px;
+  }

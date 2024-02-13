@@ -10,7 +10,7 @@ export const reducerSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            const item = state.productData.find((item)=>item.id === action.payload)
+            const item = state.productData.find((item)=>item.id === action.payload.id)
             if(item){
                 item.quantity+= action.payload.quantity
             }
