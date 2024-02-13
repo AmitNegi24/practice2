@@ -4,6 +4,7 @@ import { FaSearch, FaShoppingBag, FaUser } from "react-icons/fa"
 import logo from '../../assets/logo.png'
 import "../Navbar/Navbar.css"
 import { useSelector } from 'react-redux'
+
 function Navbar() {
     const productData = useSelector((state)=> state.bazaar.productData);
     console.log(productData);
@@ -19,6 +20,7 @@ function Navbar() {
                         <Link to={"/user"}><FaUser /></Link>
                     </div>
                 </div>
+                
             </nav>
         </div>
     )
