@@ -51,7 +51,6 @@ function ProductCard(product) {
         draggable
         pauseOnHover
         theme='dark'
-
       />
     </div>
   )
