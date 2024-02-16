@@ -1,0 +1,66 @@
+.CartItem {
+  width: 66.6667%;
+  padding-right: 2.5rem;
+}
+
+.CartItem1 {
+  width: 100%;
+}
+
+.heading1 {
+  font-size: 1.5rem;
+}
+
+.box1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.icon {
+  font-size: 1.25rem;
+  color: #4a5568;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.icon:hover {
+  color: #e53e3e;
+}
+.image{
+  width: 8rem;
+  height: 8rem; 
+  object-fit: cover;
+}
+.box2{
+  display: flex; 
+  align-items: center; 
+  gap: 0.5rem;
+}
+.quantitybox {
+  width: 13rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #718096;
+  gap: 1rem;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem;
+}
+.resetbtn {
+  background-color: #dc2626;
+  color: #fff;
+  margin-top: 2rem; 
+  margin-left: 1.75rem;
+  padding-top: 0.25rem; 
+  padding-bottom: 0.25rem; 
+  padding-left: 1.5rem; 
+  padding-right: 1.5rem; 
+  transition-duration: 0.3s; 
+}
+
+.resetbtn:hover {
+  background-color: #9c1d1d; 
+}
