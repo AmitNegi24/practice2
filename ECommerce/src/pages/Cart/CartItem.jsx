@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './CartItem.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { MdOutlineClose } from 'react-icons/md'
-import { deleteItem, resetCart } from '../../redux/ReducerSlice'
+import { decrementQuantity, deleteItem, incrementQuantity, resetCart } from '../../redux/ReducerSlice'
 import { toast } from 'react-toastify'
 import { Link } from "react-router-dom"
 const CartItem = () => {
   const productData = useSelector((state) => state.bazaar.productData);
-  let [baseQty, setbaseQty] = useState(1);
   const dispatch = useDispatch();
   return (
     <div className='CartItem'>
@@ -30,9 +29,23 @@ const CartItem = () => {
                 <div className='quantitybox'>
                   <p style={{ fontSize: '14px' }}>Quantity</p>
                   <div className='buttons'>
-                    <button onClick={() => setbaseQty(baseQty === 1 ? baseQty = 1 : baseQty - 1)}>-</button>
-                    <span>{baseQty}</span>
-                    <button onClick={() => setbaseQty(baseQty + 1)}>+</button>
+                    <button onClick={() => dispatch(decrementQuantity({
+                      id: item.id,
+                      title: item.title,
+                      image: item.image,
+                      price: item.price,
+                      quantity: 1,
+                      description: item.description
+                    }))}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => dispatch(incrementQuantity({
+                      id: item.id,
+                      title: item.title,
+                      image: item.image,
+                      price: item.price,
+                      quantity: 1,
+                      description: item.description
+                    }))}>+</button>
                   </div>
                 </div>
                 <p style={{ width: '14%' }}>${item.quantity * item.price}</p>
@@ -41,7 +54,7 @@ const CartItem = () => {
           })
         }
       </div>
-      <button onClick={()=>dispatch(resetCart()) & toast.error(`Cart is Empty`)} className='resetbtn'>Reset Cart</button>
+      <button onClick={() => dispatch(resetCart()) & toast.error(`Cart is Empty`)} className='resetbtn'>Reset Cart</button>
       <Link to="/"><button className='resetbtn'>Go to shopping</button></Link>
     </div>
   )
