@@ -13,7 +13,11 @@ const CartItem = () => {
       <div className='CartItem1'>
         <h2 className='heading1'>Shopping Cart</h2>
       </div>
-      <div>
+      {productData.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <div>
+          <div>
         {
           productData.map((item) => {
             return (
@@ -56,6 +60,10 @@ const CartItem = () => {
       </div>
       <button onClick={() => dispatch(resetCart()) & toast.error(`Cart is Empty`)} className='resetbtn'>Reset Cart</button>
       <Link to="/"><button className='resetbtn'>Go to shopping</button></Link>
+        </div>
+      )
+      }
+      
     </div>
   )
 }
