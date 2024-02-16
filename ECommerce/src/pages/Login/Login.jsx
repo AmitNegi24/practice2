@@ -56,6 +56,7 @@ function Login() {
                     <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </label>
             </div>
+            
             <div className='login1'>
                 <div className='custom-button' onClick={handleGoogleLogin}>
                     <img style={{ width: '10%' }} src="https://www.pngplay.com/wp-content/uploads/13/Google-Logo-Transparent-Background.png" alt='image' />

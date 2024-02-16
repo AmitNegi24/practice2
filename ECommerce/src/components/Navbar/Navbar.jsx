@@ -27,7 +27,7 @@ function Navbar() {
                 toast.success('Logged out successfully');
                 setTimeout(() => {
                     navigate('/login');
-                }, 1500);
+                }, 2000);
             })
             .catch((err) => {
                 console.error('Error during logout:', err);
