@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt } from "react-icons/fa"
 import { getAuth, signOut } from "firebase/auth";
+import { ToastContainer, toast } from 'react-toastify'
 import logo from '../../assets/logo.png'
 import "../Navbar/Navbar.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUser } from '../../redux/ReducerSlice'
 
 function Navbar() {
+    const navigate = useNavigate();
     const productData = useSelector((state) => state.bazaar.productData);
     const userInfo = useSelector((state) => state.bazaar.userInfo)
     const dispatch = useDispatch();
@@ -19,6 +21,9 @@ function Navbar() {
             .then(() => {
                 dispatch(removeUser());
                 toast.success("Log out successfully");
+                setTimeout(() => {
+                    navigate("/login")
+                }, 1500)
             }).catch((err) => {
                 console.log(err)
             })
@@ -64,11 +69,20 @@ function Navbar() {
                 </div>
 
             </nav>
+            <ToastContainer
+                position='top-left'
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='dark'
+            />
         </div>
     )
 }
 
 export default Navbar
-{/* <Link to={"/login"}>
-                            <img className='userlogo' src={userInfo ? userInfo.Image : "https://images.pexels.com/photos/264547/pexels-photo-264547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} alt='icon' />
-                        </Link> */}
