@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux'
 
 function Navbar() {
     const productData = useSelector((state)=> state.bazaar.productData);
-    console.log(productData);
+    const userInfo = useSelector((state)=>state.bazaar.userInfo)
+    console.log(userInfo);
     return (
         <div>
             <nav className='navbar'>
@@ -18,6 +19,9 @@ function Navbar() {
                         <Link to={"/search"}><FaSearch /></Link>
                         <Link to={"/cart"}><FaShoppingBag /><span class="badge badge-warning">{productData.length}</span></Link>
                         <Link to={"/login"}><FaUser /></Link>
+                        {
+                            userInfo && <p>{userInfo.name}</p>
+                        }
                     </div>
                 </div>
                 

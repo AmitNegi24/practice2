@@ -8,8 +8,7 @@ function Products() {
         axios.get("https://fakestoreapi.com/products")
             .then((res) => {
                 const data1 = res.data
-                setData(data1)
-                console.log(data1)
+                setData(data1);
             }).catch((err) => {
                 console.log(err)
             })
