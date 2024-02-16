@@ -34,15 +34,15 @@ function Login() {
         })
     }
 
-    const handlesignout = () => {
-        signOut(auth)
-            .then(() => {
-                dispatch(removeUser());
-                toast.success("Log out successfully");
-            }).catch((err) => {
-                console.log(err)
-            })
-    }
+    // const handlesignout = () => {
+    //     signOut(auth)
+    //         .then(() => {
+    //             dispatch(removeUser());
+    //             toast.success("Log out successfully");
+    //         }).catch((err) => {
+    //             console.log(err)
+    //         })
+    // }
     return (
         <div className='Login'>
             <div className='custom-button1'>
@@ -61,14 +61,14 @@ function Login() {
                     <img style={{ width: '10%' }} src="https://www.pngplay.com/wp-content/uploads/13/Google-Logo-Transparent-Background.png" alt='image' />
                     <span className='custom-text'>Sign in with Google</span>
                 </div>
-                <button onClick={handlesignout}>Signout</button>
+                
             </div>
             <div className='login1'>
                 <div className='custom-button'>
                     <img style={{ width: '10%' }} src="https://pngimg.com/uploads/github/github_PNG47.png" />
                     <span className='custom-text'>Sign in with Github</span>
                 </div>
-                <button onClick={handlesignout}>Signout</button>
+                
             </div>
             <ToastContainer
                 position='top-left'

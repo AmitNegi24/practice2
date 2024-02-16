@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
-import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt} from "react-icons/fa"
+import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt } from "react-icons/fa"
+import { getAuth, signOut } from "firebase/auth";
 import logo from '../../assets/logo.png'
 import "../Navbar/Navbar.css"
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,10 +12,16 @@ function Navbar() {
     const userInfo = useSelector((state) => state.bazaar.userInfo)
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
+    const auth = getAuth();
 
     const logoutHandler = () => {
-        setIsOpen(false)
-        dispatch(removeUser())
+        signOut(auth)
+            .then(() => {
+                dispatch(removeUser());
+                toast.success("Log out successfully");
+            }).catch((err) => {
+                console.log(err)
+            })
     }
     // console.log(userInfo);
     return (
@@ -25,12 +32,17 @@ function Navbar() {
                     <div className='links'>
                         <Link to={"/"}>Home</Link>
                         <Link to={"/search"}><FaSearch /></Link>
-                        <Link to={"/cart"}><FaShoppingBag /><span className="badge badge-warning">{productData.length}</span></Link>
-                        
+                        {userInfo && ( // Only render the cart link if userInfo exists (user is logged in)
+                            <Link to={"/cart"}>
+                                <FaShoppingBag />
+                                <span className="badge badge-warning">{productData.length}</span>
+                            </Link>
+                        )}
+
                         {
                             userInfo ? (
                                 <>
-                                    <img  onClick={() => setIsOpen((prev) => !prev)} className='userlogo' src={userInfo ? userInfo.Image : "https://images.pexels.com/photos/264547/pexels-photo-264547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} alt='icon' />
+                                    <img onClick={() => setIsOpen((prev) => !prev)} className='userlogo' src={userInfo ? userInfo.Image : "https://images.pexels.com/photos/264547/pexels-photo-264547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} alt='icon' />
                                     <dialog className='dialog' open={isOpen}>
                                         <div>
                                             <button onClick={logoutHandler}>
