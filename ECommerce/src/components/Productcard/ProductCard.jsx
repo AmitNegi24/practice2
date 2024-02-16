@@ -51,7 +51,7 @@ function ProductCard(product) {
         <p>${product.product.price}</p>
       </div>
       <button className='custom-element' onClick={handleAddToCart}
-        disabled={!userInfo}>addToCart</button>
+        >addToCart</button>
       <ToastContainer
         position='top-left'
         autoClose={2000}
