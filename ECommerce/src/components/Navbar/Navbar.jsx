@@ -15,7 +15,7 @@ function Navbar() {
     const userInfo = useSelector((state) => state.bazaar.userInfo);
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
-    
+
     const auth = getAuth();
 
     const logoutHandler = () => {
@@ -78,18 +78,7 @@ function Navbar() {
                     </div>
                 </div>
             </nav>
-            <ToastContainer
-                position="top-left"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
+            
         </div>
     );
 }
