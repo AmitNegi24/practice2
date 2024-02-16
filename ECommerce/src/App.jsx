@@ -41,9 +41,9 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element = <Home/> />
+        <Route path="/" element = {<Home/>} />
         <Route path="/cart" element={userInfo ? <Cart /> : <Navigate to="/login" />} />
-        <Route path="/product/:id" element={userInfo ? <Product /> : <Navigate to="/login" />} />
+        <Route path="/product/:id" element= {<Product />} />
         <Route path="/login" element={!userInfo ? <Login /> : <Navigate to="/" />} />
       </Routes>
       <Footer />
