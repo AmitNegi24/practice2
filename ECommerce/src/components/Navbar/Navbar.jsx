@@ -17,7 +17,7 @@ function Navbar() {
                         <Link to={"/"}>Home</Link>
                         <Link to={"/search"}><FaSearch /></Link>
                         <Link to={"/cart"}><FaShoppingBag /><span class="badge badge-warning">{productData.length}</span></Link>
-                        <Link to={"/user"}><FaUser /></Link>
+                        <Link to={"/login"}><FaUser /></Link>
                     </div>
                 </div>
                 
