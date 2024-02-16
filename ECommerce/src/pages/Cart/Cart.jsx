@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import './Cart.css'
 import { useSelector } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 function Cart() {
+
   const productData = useSelector((state) => state.bazaar.productData);
-  const [totalAmount, setTotalAmount] = useState("")
+  const userInfo=useSelector((state)=>state.bazaar.userInfo)
+  const [totalAmount, setTotalAmount] = useState("");
+  const [payNow,setPayNow] = useState(false);
+
   useEffect(() => {
     let price = 0;
     productData.map((item) => {
@@ -14,6 +18,16 @@ function Cart() {
     })
     setTotalAmount(price);
   }, [productData])
+
+  const handleCheckOut=()=>{
+    if(userInfo){
+      setPayNow(true);
+    }
+    else{
+      toast.error("please login first");
+    }
+  }
+
   return (
     <div>
       <h1>Cart</h1>
@@ -39,7 +53,7 @@ function Cart() {
             {" "}
             Total <span className='spantag'>${totalAmount}</span>
           </p>
-          <button className='btn'>CheckOut</button>
+          <button onClick={handleCheckOut} className='btn'>CheckOut</button>
         </div>
       </div>
       <ToastContainer
