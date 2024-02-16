@@ -14,7 +14,10 @@ const CartItem = () => {
         <h2 className='heading1'>Shopping Cart</h2>
       </div>
       {productData.length === 0 ? (
+        <>
         <p>Your cart is empty.</p>
+        <Link to="/"><button className='resetbtn'>Go to shopping</button></Link>
+        </>
       ) : (
         <div>
           <div>
