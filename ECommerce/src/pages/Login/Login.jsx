@@ -2,8 +2,12 @@ import React from 'react'
 import './Login.css'
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 import { ToastContainer,toast } from 'react-toastify'
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../redux/ReducerSlice';
+import { useNavigate } from 'react-router-dom';
 function Login() {
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const auth = getAuth();
     const provider = new GoogleAuthProvider()
     const handleGoogleLogin = (e) => {
@@ -12,6 +16,15 @@ function Login() {
 
         signInWithPopup(auth, provider).then((result) => {
             const user = result.user;
+            dispatch(addUser({
+                id:user.uid,
+                name:user.displayName,
+                Image:user.photoURL,
+                email:user.email,
+            }))
+            setTimeout(()=>{
+                navigate("/")
+            },1500)
         }).catch((err) => {
             console.log(err);
         })

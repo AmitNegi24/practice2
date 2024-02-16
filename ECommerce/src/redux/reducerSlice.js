@@ -40,8 +40,14 @@ export const reducerSlice = createSlice({
                 item.quantity--;
             }
         },
+        addUser: (state, action) => {
+            state.userInfo = action.payload;
+        },
+        removeUser: (state) => {
+            state.userInfo = null;
+        },
     },
 });
 
-export const { addToCart, deleteItem, resetCart, incrementQuantity, decrementQuantity } = reducerSlice.actions;
+export const { addToCart, deleteItem, resetCart, incrementQuantity, decrementQuantity, addUser, removeUser } = reducerSlice.actions;
 export default reducerSlice.reducer;
