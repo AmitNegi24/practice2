@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Login.css'
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
-import { ToastContainer,toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
 import { addUser, removeUser } from '../../redux/ReducerSlice';
 import { useNavigate } from 'react-router-dom';
 function Login() {
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('');
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const auth = getAuth();
@@ -17,14 +21,14 @@ function Login() {
         signInWithPopup(auth, provider).then((result) => {
             const user = result.user;
             dispatch(addUser({
-                id:user.uid,
-                name:user.displayName,
-                Image:user.photoURL,
-                email:user.email,
+                id: user.uid,
+                name: user.displayName,
+                Image: user.photoURL,
+                email: user.email,
             }))
-            setTimeout(()=>{
+            setTimeout(() => {
                 navigate("/")
-            },1500)
+            }, 1500)
         }).catch((err) => {
             console.log(err);
         })
@@ -41,6 +45,17 @@ function Login() {
     }
     return (
         <div className='Login'>
+            <div className='custom-button1'>
+                <h1>Login Page</h1>
+                <label>
+                    Username:
+                    <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
+                </label>
+                <label>
+                    Password:
+                    <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                </label>
+            </div>
             <div className='login1'>
                 <div className='custom-button' onClick={handleGoogleLogin}>
                     <img style={{ width: '10%' }} src="https://www.pngplay.com/wp-content/uploads/13/Google-Logo-Transparent-Background.png" alt='image' />
