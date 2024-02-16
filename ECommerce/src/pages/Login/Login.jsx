@@ -3,7 +3,7 @@ import './Login.css'
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 import { ToastContainer,toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../redux/ReducerSlice';
+import { addUser, removeUser } from '../../redux/ReducerSlice';
 import { useNavigate } from 'react-router-dom';
 function Login() {
     const dispatch = useDispatch();
@@ -33,6 +33,7 @@ function Login() {
     const handlesignout = () => {
         signOut(auth)
             .then(() => {
+                dispatch(removeUser());
                 toast.success("Log out successfully");
             }).catch((err) => {
                 console.log(err)
