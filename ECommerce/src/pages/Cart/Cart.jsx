@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem'
 import './Cart.css'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
 function Cart() {
 
@@ -9,6 +10,7 @@ function Cart() {
   const userInfo=useSelector((state)=>state.bazaar.userInfo)
   const [totalAmount, setTotalAmount] = useState("");
   const [payNow,setPayNow] = useState(false);
+   const navigate = useNavigate();
 
   useEffect(() => {
     let price = 0;
@@ -21,7 +23,9 @@ function Cart() {
 
   const handleCheckOut=()=>{
     if(userInfo){
+      console.log("checkout button clicked")
       setPayNow(true);
+      navigate("/checkout");
     }
     else{
       toast.error("please login first");
