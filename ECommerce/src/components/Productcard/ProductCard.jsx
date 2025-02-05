@@ -19,7 +19,7 @@ function ProductCard(product) {
     if (userInfo) {
       dispatch(
         addToCart({
-          id: product.product.id,
+          id: product.product.productId,
           title: product.product.title,
           image: product.product.productImage,
           price: product.product.price,
