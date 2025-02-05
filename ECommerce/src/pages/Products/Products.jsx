@@ -5,7 +5,7 @@ import '../Products/Products.css'
 function Products() {
     const [Data, setData] = useState([]);
     const fetchData = () => {
-        axios.get("https://fakestoreapi.com/products")
+        axios.get("http://localhost:8080/api/product-api/products")
             .then((res) => {
                 const data1 = res.data
                 setData(data1);

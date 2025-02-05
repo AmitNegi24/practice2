@@ -6,10 +6,11 @@ import "../Productcard/ProductCard.css"
 import { ToastContainer, toast } from 'react-toastify';
 
 function ProductCard(product) {
-  const id = product.product.id;
+  const id = product.product.productId;
   // console.log(id)
 
   const title = (product.product.title).slice(0, 36)
+ 
   const userInfo = useSelector((state) => state.bazaar.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function ProductCard(product) {
         addToCart({
           id: product.product.id,
           title: product.product.title,
-          image: product.product.image,
+          image: product.product.productImage,
           price: product.product.price,
           quantity: 1,
           description: product.product.description,
@@ -46,7 +47,7 @@ function ProductCard(product) {
   return (
     <div className="product-card" >
       <div className='card' onClick={productDetail}>
-        <img src={product.product.image} />
+      <img src={`data:image/jpeg;base64,${product.product.productImage}`} alt="Productimage" />
         <b><p>{title}</p></b>
         <p>${product.product.price}</p>
       </div>
