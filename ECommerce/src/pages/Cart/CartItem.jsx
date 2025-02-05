@@ -29,7 +29,7 @@ const CartItem = () => {
                   <MdOutlineClose onClick={() => dispatch(deleteItem(item.id))
                     & toast.error(`${item.title} is removed`)
                   } className='icon' />
-                  <img className='image' src={item.image} alt='image' />
+                  <img className='image' src={`data:image/jpeg;base64,${item.image}`} alt='image' />
                 </div>
                 <h2 style={{ width: '52%' }}>{item.title}</h2>
                 <p style={{ width: '10%' }}>${item.price}</p>
