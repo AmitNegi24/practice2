@@ -1,75 +1,117 @@
-/* Navbar.css */
-
 .navbar {
-  background-color: #cdb7b7;
+  background-color: #464242;
   color: white;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  height: 120px;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.container {
-  position:relative;
+.navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  flex-wrap: wrap;
 }
 
-.container img {
-  width: 130px;
-  border: none;
-  object-fit: contain;
-  mix-blend-mode: color-burn;
+.logo img {
+  height: 40px;
 }
 
-.links {
+.nav-links {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
-.links a {
-  color: rgb(10, 10, 10);
+.nav-links a {
+  color: white;
   text-decoration: none;
-  margin-left: 55px;
-  /* Adjust the margin as needed */
-  font-size: 2rem;
+  font-size: 16px;
+  position: relative;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-size: 12px;
+}
+
+.user-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
 }
 
-.links a:hover {
-  border-bottom: 2px solid white;
+.user-avatar {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
-.links a:last-child {
-  margin-right: 0;
-  /* Remove the margin for the last link */
+.username {
+  font-size: 14px;
+  margin-right: 10px;
 }
 
-.badge {
-  background-color: rgb(69, 62, 62);
-  color: white;
-  padding: 0.5px 1px;
-  text-align: center;
+.dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #1f1f1f;
   border-radius: 5px;
+  padding: 10px;
+  z-index: 100;
 }
 
-.userlogo {
-  width: 42px !important;
-  height: 42px;
-  border-radius: 100%;
-  overflow: hidden;
+.dropdown button {
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
 }
-.dialog{
-  position: absolute !important;
-  top: calc(100% + -44px); /* Adjust the offset as needed */
-  left: 90%;
-  transform: translateX(-50%);
-  background-color: white;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  display: none;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .user-section {
+    justify-content: center;
+  }
 }

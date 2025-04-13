@@ -1,16 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/ReducerSlice';
-import "../Productcard/ProductCard.css"
-import { ToastContainer, toast } from 'react-toastify';
+import "../Productcard/ProductCard.css";
+import { toast } from 'react-toastify';
 
-function ProductCard(product) {
-  const id = product.product.productId;
-  // console.log(id)
-
-  const title = (product.product.title).slice(0, 36)
- 
+function ProductCard({ product }) {
+  const id = product.productId;
+  const title = product.title.slice(0, 36);  // Limiting title length to 36 characters
   const userInfo = useSelector((state) => state.bazaar.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,54 +16,38 @@ function ProductCard(product) {
     if (userInfo) {
       dispatch(
         addToCart({
-          id: product.product.productId,
-          title: product.product.title,
-          image: product.product.productImage,
-          price: product.product.price,
+          id: product.productId,
+          title: product.title,
+          image: product.productImage,
+          price: product.price,
           quantity: 1,
-          description: product.product.description,
+          description: product.description,
         })
       );
-      toast.success(`${product.product.title} is added`);
+      toast.success(`${product.title} is added`);  // Display toast message
     } else {
-      toast.error("please login first");
+      toast.error("Please login first");  // Display error toast if not logged in
     }
   };
 
   const productDetail = () => {
-    // console.log("product details")
-    navigate(`/product/${id}`,
-      {
-        state: {
-          item: product,
-        }
-      }
-    );
+    navigate(`/product/${id}`, {
+      state: {
+        item: product,
+      },
+    });
+  };
 
-  }
   return (
-    <div className="product-card" >
+    <div className="product-card">
       <div className='card' onClick={productDetail}>
-      <img src={`data:image/jpeg;base64,${product.product.productImage}`} alt="Productimage" />
+        <img src={`data:image/jpeg;base64,${product.productImage}`} alt="Productimage" />
         <b><p>{title}</p></b>
-        <p>${product.product.price}</p>
+        <p>${product.price}</p>
       </div>
-      <button className='custom-element' onClick={handleAddToCart}
-        >addToCart</button>
-      <ToastContainer
-        position='top-left'
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='dark'
-      />
+      <button className='custom-element' onClick={handleAddToCart}>Add To Cart</button>
     </div>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;

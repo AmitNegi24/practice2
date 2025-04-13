@@ -40,3 +40,68 @@
 .read-the-docs {
   color: #888;
 }
+
+
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the body font and a global background color */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+/* Flexbox Layout for Containers */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  flex: 1 1 30%;  /* Default 3 items per row */
+  margin: 10px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Images */
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .item {
+    flex: 1 1 100%;  /* 1 item per row on small screens */
+  }
+}
+
+/* Tablet Specific Styles */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .item {
+    flex: 1 1 45%;  /* 2 items per row on tablets */
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  .item {
+    flex: 1 1 30%;  /* 3 items per row on large screens */
+  }
+}

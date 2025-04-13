@@ -6,7 +6,8 @@ import Footer from "./components/Footer/Footer";
 import Cart from "./pages/Cart/Cart";
 import Product from "./pages/Product/Product";
 import Login from "./pages/Login/Login";
-import Checkout from "./pages/CheckOut/CheckOut";
+import Checkout from "./pages/CheckOut/Checkout";
+
 
 function App() {
   const userInfo = useSelector((state) => state.bazaar.userInfo);

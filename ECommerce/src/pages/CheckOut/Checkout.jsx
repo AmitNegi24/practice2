@@ -1,9 +1,10 @@
-// src/pages/Checkout/Checkout.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteItem, resetCart } from '../../redux/ReducerSlice';
 import { useNavigate } from 'react-router-dom';
-import "./Checkout.css";
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import "./checkout.css";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.bazaar.productData);
@@ -18,8 +19,37 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    // Check if token is valid and not expired
+    const token = localStorage.getItem('userToken');
+    console.log("Token from localStorage: ", token);
+    
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        // const decodedToken = (token);
+        console.log("Decoded token: ", decodedToken);
+
+        const currentTime = Date.now() / 1000; // Get current time in seconds
+        if (decodedToken.exp < currentTime) {
+          alert('Session expired, please log in again!');
+          localStorage.removeItem('userToken');
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error("Error decoding token: ", error);
+        alert('Invalid token. Please log in again.');
+        navigate('/login');
+      }
+    } else {
+      console.log("No token found.");
+      navigate('/login');
+    }
+  }, [navigate]);
+
   // Calculate total price
   const calculateTotal = () => {
+    if (!cartItems || cartItems.length === 0) return '0.00';
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
@@ -28,7 +58,7 @@ const Checkout = () => {
     setShippingInfo({ ...shippingInfo, [name]: value });
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     // Check if the user is logged in
     if (!userInfo) {
       alert('Please log in to checkout!');
@@ -36,12 +66,45 @@ const Checkout = () => {
       return;
     }
 
-    // Mock checkout process
-    alert('Order Placed Successfully!');
-    
-    // Reset cart after successful checkout
-    dispatch(resetCart());
-    navigate('/');
+    try {
+      // Get token from localStorage
+      const token = localStorage.getItem('userToken');
+      if (!token) {
+        alert('No authentication token found, please log in.');
+        navigate('/login');
+        return;
+      }
+
+      console.log("TOKEN = ", token);
+
+      // API request to place order
+      const response = await axios.post(
+        'http://localhost:8080/api/checkout-api/checkout',
+        {
+          cartItems,    // Cart items
+          shippingInfo, // Shipping info
+          totalAmount: calculateTotal(), // Total amount
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,  // Include token in headers
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      console.log("Checkout Response:", response);
+
+      // Handle success response
+      if (response.status === 200) {
+        alert('Order Placed Successfully!');
+        dispatch(resetCart()); // Clear the cart after order success
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Checkout failed:', error.response ? error.response.data : error.message);
+      alert('Checkout failed. Please try again.');
+    }
   };
 
   const handleRemoveItem = (id) => {

@@ -1,27 +1,43 @@
-
 import React from 'react';
 import './Footer.css';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaGithub } from 'react-icons/fa';
+
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
+        {/* About Us Section */}
         <div className="footer-section about">
-          <h2>About Us</h2>
+          <h2>Our Company</h2>
           <p>
-            We are XYZ Tech Solutions, a leading technology company dedicated to providing innovative solutions to our clients. With a team of skilled professionals, we specialize in software development, web design, and digital marketing.
+            We are InnovateTech, a cutting-edge software company focused on delivering tailored solutions that drive business success.
+            Our expertise ranges from AI-driven applications to secure cloud platforms, helping you achieve your goals with technology.
           </p>
           <p>
-            Our mission is to empower businesses with cutting-edge technologies, helping them thrive in the digital landscape. We are committed to delivering high-quality services that exceed our clients' expectations and contribute to their success.
+            Innovation, security, and customer satisfaction are at the heart of everything we do.
           </p>
         </div>
+
+        {/* Quick Links Section */}
+        <div className="footer-section links">
+          <h2>Quick Links</h2>
+          <p><a href="/about-us">About Us</a></p>
+          <p><a href="/services">Services</a></p>
+          <p><a href="/blog">Blog</a></p>
+          <p><a href="/contact-us">Contact Us</a></p>
+        </div>
+
+        {/* Contact Information Section */}
         <div className="footer-section contact">
-          <h2>Contact Information</h2>
-          <p>Email: info@example.com</p>
-          <p>Phone: +1 (123) 456-7890</p>
+          <h2>Contact</h2>
+          <p>Email: support@innovatetech.com</p>
+          <p>Phone: +1 (800) 123-4567</p>
+          <p>Address: 789 Tech Avenue, Silicon Valley, CA</p>
         </div>
+
+        {/* Social Media Links Section */}
         <div className="footer-section social">
-          <h2>Connect with Us</h2>
+          <h2>Follow Us</h2>
           <div className="social-icons">
             <a href="#" target="_blank" rel="noopener noreferrer">
               <FaFacebookF />
@@ -41,8 +57,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer Bottom Section */}
       <div className="footer-bottom">
-        <p>&copy; 2024 Dabba. All rights reserved.</p>
+        <p>&copy; 2024 InnovateTech. All rights reserved.</p>
       </div>
     </footer>
   );
