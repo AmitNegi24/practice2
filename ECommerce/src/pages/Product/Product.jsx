@@ -61,7 +61,7 @@ function Product() {
               onClick={() =>
                 dispatch(
                   addToCart({
-                    id: product.productId,
+                    productId: product.productId,
                     title: product.title,
                     image: product.productImage,
                     price: product.price,

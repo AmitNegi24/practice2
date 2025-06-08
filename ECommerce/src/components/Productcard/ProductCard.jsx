@@ -6,7 +6,7 @@ import "../Productcard/ProductCard.css";
 import { toast } from 'react-toastify';
 
 function ProductCard({ product }) {
-  const id = product.productId;
+  const productId = product.productId;
   const title = product.title.slice(0, 36);  // Limiting title length to 36 characters
   const userInfo = useSelector((state) => state.bazaar.userInfo);
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function ProductCard({ product }) {
     if (userInfo) {
       dispatch(
         addToCart({
-          id: product.productId,
+          productId: product.productId,
           title: product.title,
           image: product.productImage,
           price: product.price,
@@ -31,7 +31,7 @@ function ProductCard({ product }) {
   };
 
   const productDetail = () => {
-    navigate(`/product/${id}`, {
+    navigate(`/product/${productId}`, {
       state: {
         item: product,
       },

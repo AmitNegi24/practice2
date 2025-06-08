@@ -44,6 +44,7 @@ const Checkout = () => {
   }, []);
 
   const calculateTotal = () => {
+    console.log("CART ITEMS ARE=", cartItems)
     if (!cartItems || cartItems.length === 0) return '0.00';
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
@@ -53,6 +54,7 @@ const Checkout = () => {
     setShippingInfo({ ...shippingInfo, [name]: value });
   };
 
+
   const handleCheckout = async () => {
     if (!userInfo) {
       alert("Please log in to checkout.");
@@ -60,7 +62,31 @@ const Checkout = () => {
       return;
     }
 
+    // Validate shipping info before sending
+    if (
+      !shippingInfo.name.trim() ||
+      !shippingInfo.address.trim() ||
+      !shippingInfo.city.trim() ||
+      !shippingInfo.zipCode.trim()
+    ) {
+      toast.error("Please fill in all the shipping details.");
+      return;
+    }
+
+    // Transform cartItems for backend
+    const transformedCartItems = cartItems.map(item => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      title: item.title,
+      price: item.price,
+      image: item.image
+    }));
+
+    console.log("Cart items after transformation:", transformedCartItems);
+
+    const totalAmount = calculateTotal();
     const token = localStorage.getItem('userToken');
+
     if (!token) {
       alert("No authentication token found.");
       navigate('/login');
@@ -71,9 +97,14 @@ const Checkout = () => {
       const response = await axios.post(
         'http://localhost:8080/api/checkout-api/checkout',
         {
-          cartItems,
+          cartItems: transformedCartItems,
           shippingInfo,
-          totalAmount: calculateTotal(),
+          totalAmount,
+          paymentMethod,
+          upiId,
+          razorpayOrderId: null,
+          razorpayPaymentId: null,
+          razorpaySignature: null
         },
         {
           headers: {
@@ -85,7 +116,7 @@ const Checkout = () => {
 
       const data = response.data;
       const orderId = data.match(/ID: (.+?) and Status/)[1];
-      console.log("ORDER ID ==", orderId)
+      console.log("ORDER ID ==", orderId);
 
       if (paymentMethod === 'UPI') {
         if (!upiId || !upiId.includes('@')) {
@@ -104,12 +135,7 @@ const Checkout = () => {
         const razorRes = await axios.post(
           `http://localhost:8080/api/payment-api/create-razorpay-order?orderId=${orderId}`,
           {},
-          {
-            headers:
-            {
-              Authorization: `Bearer ${token}`
-            }
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         const { id: razorpayOrderId, amount, currency } = razorRes.data;
@@ -163,9 +189,12 @@ const Checkout = () => {
       navigate('/PaymentSuccess');
     } catch (err) {
       console.error(err);
-      toast.error("❌ Checkout failed. Try again.");
+      toast.error(
+        err?.response?.data?.errorMessage || "❌ Checkout failed. Try again."
+      );
     }
   };
+
 
   const handleRemoveItem = (id) => {
     dispatch(deleteItem(id));
