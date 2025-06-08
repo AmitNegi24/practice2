@@ -1,0 +1,54 @@
+.success-body {
+  text-align: center;
+  padding: 40px 0;
+  background: #ebf0f5;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+}
+
+.card1 {
+  background: white;
+  padding: 60px;
+  border-radius: 4px;
+  box-shadow: 0 2px 3px #c8d0d8;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.icon-container1 {
+  border-radius: 200px;
+  height: 200px;
+  width: 200px;
+  background: #f8faf5;
+  margin: 0 auto;
+}
+
+.checkmark {
+  color: #9abc66;
+  font-size: 100px;
+  line-height: 200px;
+}
+
+.success-heading {
+  color: #88b04b;
+  font-weight: 900;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  color: #404f5e;
+  font-size: 20px;
+  margin: 0;
+}
+
+.success-button {
+  display: inline-block;
+  margin-top: 30px;
+  font-size: 18px;
+  color: white;
+  background-color: #88b04b;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}

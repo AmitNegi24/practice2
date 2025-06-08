@@ -30,6 +30,10 @@ function Cart() {
       toast.dismiss();
       toast.error('Please login first');
     }
+    if (productData.length == 0) {
+      toast.error('Cart is empty');
+      navigate('/cart')
+    }
   };
 
   return (

@@ -5,49 +5,44 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import "./checkout.css";
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.bazaar.productData);
   const userInfo = useSelector((state) => state.bazaar.userInfo);
-  const [shippingInfo, setShippingInfo] = useState({
-    name: '',
-    address: '',
-    city: '',
-    zipCode: '',
-  });
-
+  const [shippingInfo, setShippingInfo] = useState({ name: '', address: '', city: '', zipCode: '' });
+  const [paymentMethod, setPaymentMethod] = useState('COD');
+  const [upiId, setUpiId] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check if token is valid and not expired
     const token = localStorage.getItem('userToken');
-    console.log("Token from localStorage: ", token);
-    
     if (token) {
       try {
-        const decodedToken = jwtDecode(token);
-        // const decodedToken = (token);
-        console.log("Decoded token: ", decodedToken);
-
-        const currentTime = Date.now() / 1000; // Get current time in seconds
-        if (decodedToken.exp < currentTime) {
-          alert('Session expired, please log in again!');
+        const decoded = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp < currentTime) {
+          alert("Session expired, please log in again.");
           localStorage.removeItem('userToken');
           navigate('/login');
         }
-      } catch (error) {
-        console.error("Error decoding token: ", error);
-        alert('Invalid token. Please log in again.');
+      } catch (e) {
+        alert("Invalid token. Please log in again.");
         navigate('/login');
       }
     } else {
-      console.log("No token found.");
       navigate('/login');
     }
   }, [navigate]);
 
-  // Calculate total price
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   const calculateTotal = () => {
     if (!cartItems || cartItems.length === 0) return '0.00';
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
@@ -59,51 +54,116 @@ const Checkout = () => {
   };
 
   const handleCheckout = async () => {
-    // Check if the user is logged in
     if (!userInfo) {
-      alert('Please log in to checkout!');
+      alert("Please log in to checkout.");
+      navigate('/login');
+      return;
+    }
+
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      alert("No authentication token found.");
       navigate('/login');
       return;
     }
 
     try {
-      // Get token from localStorage
-      const token = localStorage.getItem('userToken');
-      if (!token) {
-        alert('No authentication token found, please log in.');
-        navigate('/login');
-        return;
-      }
-
-      console.log("TOKEN = ", token);
-
-      // API request to place order
       const response = await axios.post(
         'http://localhost:8080/api/checkout-api/checkout',
         {
-          cartItems,    // Cart items
-          shippingInfo, // Shipping info
-          totalAmount: calculateTotal(), // Total amount
+          cartItems,
+          shippingInfo,
+          totalAmount: calculateTotal(),
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,  // Include token in headers
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-        },
+        }
       );
 
-      console.log("Checkout Response:", response);
+      const data = response.data;
+      const orderId = data.match(/ID: (.+?) and Status/)[1];
+      console.log("ORDER ID ==", orderId)
 
-      // Handle success response
-      if (response.status === 200) {
-        alert('Order Placed Successfully!');
-        dispatch(resetCart()); // Clear the cart after order success
-        navigate('/');
+      if (paymentMethod === 'UPI') {
+        if (!upiId || !upiId.includes('@')) {
+          toast.error("Please enter a valid UPI ID.");
+          return;
+        }
+
+        await axios.post(
+          `http://localhost:8080/api/payment-api/confirm?orderId=${orderId}&upiId=${upiId}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       }
-    } catch (error) {
-      console.error('Checkout failed:', error.response ? error.response.data : error.message);
-      alert('Checkout failed. Please try again.');
+
+      if (paymentMethod === 'RAZORPAY') {
+        const razorRes = await axios.post(
+          `http://localhost:8080/api/payment-api/create-razorpay-order?orderId=${orderId}`,
+          {},
+          {
+            headers:
+            {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        const { id: razorpayOrderId, amount, currency } = razorRes.data;
+
+        const options = {
+          key: "rzp_test_uq2aglezmnBSYp",
+          amount,
+          currency,
+          name: "eKart",
+          description: "Order Payment",
+          order_id: razorpayOrderId,
+          handler: async function (response) {
+            try {
+              await axios.post(
+                "http://localhost:8080/api/payment-api/verify-payment",
+                {
+                  razorpayOrderId: response.razorpay_order_id,
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpaySignature: response.razorpay_signature,
+                  ekartOrderId: orderId,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                  },
+                }
+              );
+
+              toast.success("🎉 Payment Successful!");
+              dispatch(resetCart());
+              navigate('/PaymentSuccess');
+            } catch (err) {
+              toast.error("❌ Payment Verification Failed.");
+            }
+          },
+          theme: { color: "#121212" },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+        return;
+      }
+
+      toast.success("🎉 Order placed successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
+      dispatch(resetCart());
+      navigate('/PaymentSuccess');
+    } catch (err) {
+      console.error(err);
+      toast.error("❌ Checkout failed. Try again.");
     }
   };
 
@@ -142,39 +202,37 @@ const Checkout = () => {
       <div className="shipping-info">
         <h3>Shipping Information</h3>
         <form>
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={shippingInfo.name}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="address"
-            placeholder="Shipping Address"
-            value={shippingInfo.address}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={shippingInfo.city}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="zipCode"
-            placeholder="Zip Code"
-            value={shippingInfo.zipCode}
-            onChange={handleInputChange}
-            required
-          />
+          <input type="text" name="name" placeholder="Full Name" value={shippingInfo.name} onChange={handleInputChange} required />
+          <input type="text" name="address" placeholder="Shipping Address" value={shippingInfo.address} onChange={handleInputChange} required />
+          <input type="text" name="city" placeholder="City" value={shippingInfo.city} onChange={handleInputChange} required />
+          <input type="text" name="zipCode" placeholder="Zip Code" value={shippingInfo.zipCode} onChange={handleInputChange} required />
         </form>
+      </div>
+
+      <div className="payment-method">
+        <h3>Payment Method</h3>
+        <label>
+          <input type="radio" value="COD" checked={paymentMethod === 'COD'} onChange={() => setPaymentMethod('COD')} />
+          Cash on Delivery
+        </label>
+        <label>
+          <input type="radio" value="UPI" checked={paymentMethod === 'UPI'} onChange={() => setPaymentMethod('UPI')} />
+          UPI Payment
+        </label>
+        <label>
+          <input type="radio" value="RAZORPAY" checked={paymentMethod === 'RAZORPAY'} onChange={() => setPaymentMethod('RAZORPAY')} />
+          Razorpay
+        </label>
+
+        {paymentMethod === 'UPI' && (
+          <input
+            type="text"
+            placeholder="Enter your UPI ID"
+            value={upiId}
+            onChange={(e) => setUpiId(e.target.value)}
+            style={{ marginTop: "10px" }}
+          />
+        )}
       </div>
 
       <div className="checkout-actions">
