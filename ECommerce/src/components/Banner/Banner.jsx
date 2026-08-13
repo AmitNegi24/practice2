@@ -4,7 +4,10 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import './Banner.css'; // Create this file for your custom styles
+import './Banner.css'; 
+import portfolio1 from '../../assets/portfolio1.jpeg';
+import portfolio2 from '../../assets/portfolio2.jpeg';
+import portfolio3 from '../../assets/portfolio3.jpeg';
 
 const Banner = () => {
   const settings = {
@@ -22,13 +25,13 @@ const Banner = () => {
       <Slider {...settings}>
         {/* Your Banner slides go here */}
         <div className="Banner-slide">
-          <img src="https://img.freepik.com/premium-psd/banner-template-online-fashion-sale_23-2148585403.jpg" alt="Slide 1" />
+          <img src={portfolio1} alt="Slide 1" />
         </div>
         <div className="Banner-slide">
-          <img src="https://img.freepik.com/free-psd/fashion-store-banner-template_23-2148675200.jpg" alt="Slide 2" />
+          <img src={portfolio2} alt="Slide 2" />
         </div>
         <div className="Banner-slide">
-          <img src="https://i.pinimg.com/736x/b9/d8/04/b9d804b15a17b2535f167556eaf9ddf5.jpg" alt="Slide 2" />
+          <img src={portfolio3} alt="Slide 2" />
         </div>
       </Slider>
     </div>

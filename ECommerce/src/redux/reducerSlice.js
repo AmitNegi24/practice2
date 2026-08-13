@@ -5,7 +5,7 @@ const initialState = {
     userInfo: null,
 };
 
-export const reducerSlice = createSlice({
+export const ReducerSlice = createSlice({
     name: "bazaar",
     initialState,
     reducers: {
@@ -74,6 +74,6 @@ export const {
     decrementQuantity, 
     addUser, 
     removeUser 
-} = reducerSlice.actions;
+} = ReducerSlice.actions;
 
-export default reducerSlice.reducer;
+export default ReducerSlice.reducer;
