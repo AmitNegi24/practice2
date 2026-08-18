@@ -10,6 +10,7 @@ export const ReducerSlice = createSlice({
     initialState,
     reducers: {
         // Add item to cart
+        //here, we check if the item already exists in the cart by matching both `id` and `title`. If it exists, we increment its quantity; otherwise, we add the new item to the cart.
         addToCart: (state, action) => {
 
             const item = state.productData.find(

@@ -47,7 +47,7 @@ function Login() {
 
         try {
             if (isSignUp) {
-                await axios.post('http://localhost:8080/api/customer-api/register', {
+                await axios.post('/api/customer-api/register', {
                     name,
                     emailId,
                     password,
@@ -55,7 +55,7 @@ function Login() {
                 toast.success('Signup successful! Please log in.');
                 setIsSignUp(false);
             } else {
-                const response = await axios.post('http://localhost:8080/api/customer-api/login', {
+                const response = await axios.post('/api/customer-api/login', {
                     emailId,
                     password,
                 });

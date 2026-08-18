@@ -7,7 +7,7 @@ function Products() {
     const [Data, setData] = useState([]);
 
     const fetchData = () => {
-        axios.get("http://localhost:8080/api/product-api/products")
+        axios.get("/api/product-api/products")
             .then((res) => {
                 const data1 = res.data;
                 setData(data1);

@@ -95,7 +95,7 @@ const Checkout = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/checkout-api/checkout',
+        '/api/checkout-api/checkout',
         {
           cartItems: transformedCartItems,
           shippingInfo,
@@ -125,7 +125,7 @@ const Checkout = () => {
         }
 
         await axios.post(
-          `http://localhost:8080/api/payment-api/confirm?orderId=${orderId}&upiId=${upiId}`,
+          `/api/payment-api/confirm?orderId=${orderId}&upiId=${upiId}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -133,7 +133,7 @@ const Checkout = () => {
 
       if (paymentMethod === 'RAZORPAY') {
         const razorRes = await axios.post(
-          `http://localhost:8080/api/payment-api/create-razorpay-order?orderId=${orderId}`,
+          `/api/payment-api/create-razorpay-order?orderId=${orderId}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -150,7 +150,7 @@ const Checkout = () => {
           handler: async function (response) {
             try {
               await axios.post(
-                "http://localhost:8080/api/payment-api/verify-payment",
+                "/api/payment-api/verify-payment",
                 {
                   razorpayOrderId: response.razorpay_order_id,
                   razorpayPaymentId: response.razorpay_payment_id,
